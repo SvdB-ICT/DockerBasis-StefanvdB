@@ -3,31 +3,54 @@
 # Groep:
 
 # Hier komt je code...
-lines = {
-    "line1": ["    *", 0, ""], 
-    "line2": ["   ***", 0, ""],
-    "line3": ["  ******", 0, ""],
-    "line4": [" ********", 0, ""],
-    "line5": ["***********", 0, ""],
-    "line6": ["    ***", 0, ""],
-    "line7": ["    ***", 0, ""],
-    "line8": ["    ***", 0, ""]
-    }
 
-treeCount = 5
-blankSpaceCharacter = " "
 
-def DrawBaseTree():
+
+# Definition of the tree.
+lines = (
+    "    *", 
+    "   ***",
+    "  ******",
+    " ********",
+    "***********",
+    "    ***",
+    "    ***",
+    "    ***"
+)
+
+# Get the parameters to use for tree generation.
+def GetParams():
+    # Maxxed the inputs to prevent negative inputs.
+    treeCount = max(int(input("How many trees do you want to draw? ")), 1)
+    spaceBetweenTrees = max(int(input("How many spaces do you want between the trees? ")), 0)
+
+    return treeCount, spaceBetweenTrees # Sends the paramaters out
+
+# This draws the trees in the terminal.
+def DrawTrees():
+    treeCount, spaceBetweenTrees = GetParams() # Get the parameters for tree generation from the GetParams function.
+
+    longestLine = 0 # Here I get the longest line of the tree to make sure there is no wasted space.
     for line in lines:
-        print(lines[line][0])
+        if len(line) > longestLine:
+            longestLine = len(line)
 
-def BalanceSpace():
-    print()
+    # Some flavor text and debugging.
+    print("Longest line is: ", longestLine)
+    print("Space between trees will be: ", spaceBetweenTrees)
+    print("The amount of tree shall be: ", treeCount)
+    print("Now printing trees: \n")
 
-def AddTree():
-    print()
+    # Adding together the different parts and printing them.
+    for part in lines:
+        partString = part.lstrip().center(longestLine)
+        
+        for tree in range(treeCount-1):
+            partString += " " * spaceBetweenTrees
+            partString += part.lstrip().center(longestLine)
+        
+        print(partString)
 
-# Commands
-
-DrawBaseTree()
-quit()
+# Calling the functions
+DrawTrees()
+exit()
